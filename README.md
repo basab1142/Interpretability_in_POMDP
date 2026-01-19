@@ -31,6 +31,7 @@ The agent operates in a gridworld with:
 
 We additionally use **randomized starting positions** so that time index is not trivially aligned with route commitment, enabling time-matched probing.
 
+![Environment](plots/Environment.png)
 ---
 
 ## 3. Agent: DRQN (Recurrent Q-learning)
