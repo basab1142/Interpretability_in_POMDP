@@ -140,24 +140,102 @@ This sets up the next part of the project: moving from “representation exists�
 
 ---
 
-## 8. Next Step (Planned): Mechanistic Localization + Causal Tests
+---
 
-Next, we will:
-1. identify which hidden dimensions carry the intention signal (using probe weights / attribution),
-2. perform causal interventions:
-   - ablate intention-carrying neurons
-   - patch intention state between episodes
-3. measure causal effect on:
-   - risky action rate
-   - goal reached
-   - return distribution
+## 8. New Finding: Risk Commitment as an Early Internal Decision Variable
 
-This will allow us to claim not only correlation (probe decoding), but **causal mechanism**.
+We now move from *“a representation exists”* to a clearer *mechanistic story* about **when** and **how** risk commitment is formed inside the DRQN.
+
+### 8.1 Early Intention Probe (`will_commit`)
+
+We define an episode-level intention label:
+
+**`will_commit`**  
+= whether the episode will *eventually* enter the risky region at any later timestep.
+
+Crucially, we probe this label using **early hidden states**, *before* the agent reaches the hazard or commits behaviorally.
+
+---
+
+### 8.2 Result: Intention Is Decodable Almost Immediately
+
+We train linear (logistic regression) probes on the LSTM hidden state `h_t` at different timesteps.
+
+**Key result:**
+- From as early as **t = 1**, a linear probe predicts `will_commit` with **near-perfect accuracy**
+- This holds across timesteps
+- Performance collapses under label-shuffle control
+
+This indicates that the agent forms a **stable internal intention variable very early** in the episode.
+
+---
+
+### 8.3 Timestep Sweep: Intention Over Time
+
+The following plot shows probe accuracy across timesteps:
+
+![Timestep sweep probe](plots/commitment_overtime.png)
+
+**Interpretation:**
+- Blue: probe accuracy with true labels
+- Orange: shuffle-label control
+- The large gap confirms the signal is real and not a data artifact
+- The intention signal appears *before* risk is encountered
 
 ---
 
 
+### 8.4 Hidden-State Separation at a Fixed Timestep
+
+At a fixed early timestep (e.g., `t = 1`), the projected hidden states show near-perfect separation:
+
+![Hidden-state projection at t=1](plots/risk_at_timestep_1.png)
+
+**Key observation:**
+- Two clearly separated distributions
+- Dashed line = linear decision boundary
+- This is *before* any risky action is taken
+
+This strongly supports the claim that **risk commitment is an internal decision variable**, not a late reaction to the hazard.
+
 ---
+
+## 9. Updated Mechanistic Story
+
+Putting everything together:
+
+1. The DRQN forms an **internal intention to commit or not commit to risk**
+2. This intention:
+   - appears very early in the episode
+   - is stored in the recurrent hidden state
+   - persists across time
+3. Downstream actions follow this internal variable
+4. A simple linear probe can reliably read it out
+
+In short:
+
+> **The agent plans risk internally before acting on it.**
+
+This shifts the interpretation of the policy from reactive behavior to **latent-variable–driven planning**.
+
+---
+
+## 10. Next Step: Mechanistic Localization and Causal Tests
+
+With a strong and stable intention signal identified, the next step is to move from correlation to causation by:
+
+- identifying which hidden units carry the intention signal
+- ablating or patching those units
+- measuring causal effects on risky behavior and outcomes
+
+This will allow us to explicitly link **internal computation → behavior**, completing the mechanistic analysis.
+
+---
+
+
+
+
+
 
 ## Notes
 
