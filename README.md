@@ -200,7 +200,7 @@ This strongly supports the claim that **risk commitment is an internal decision 
 
 ---
 
-## 9. Updated Mechanistic Story
+## 9.  Mechanistic Story
 
 Putting everything together:
 
@@ -221,19 +221,25 @@ else:
 > **Taking Risk is deterministic with respect to starting position**
 
 ![Deterministic route w.r.t starting pos.](plots/deterministic_route.png)
+
+> **Nueron Ablation Study Report**
+Ablating the neurons identified by the linear probe drastically alters policy behavior. After ablation the agent consistently chooses the risky path and suffers large negative returns. In contrast, ablating random neurons has minimal effect on behavior. This demonstrates that the probe-identified neurons are causally involved in the internal computation of route commitment.
+![Nueron Ablation Study](plots/Neuron_Ablation.png)
+
+> **Activation Patching**
+
+
+To test whether the hidden state representation of risk commitment causally influences behavior, we performed an activation patching experiment.
+
+We replaced the hidden state at an early timestep with a hidden state extracted from a trajectory that commits to the risky route.
+
+After patching, the agent’s risky action rate increased from 0.52 to 0.62. This demonstrates that the recurrent hidden state contains a causal representation that biases downstream policy decisions.
+
+Together with neuron ablation experiments, this shows that the DRQN develops a mechanistically meaningful internal variable corresponding to route commitment.
+
 ---
 
-## 10. Next Step: Mechanistic Localization and Causal Tests
 
-With a strong and stable intention signal identified, the next step is to move from correlation to causation by:
-
-- identifying which hidden units carry the intention signal
-- ablating or patching those units
-- measuring causal effects on risky behavior and outcomes
-
-This will allow us to explicitly link **internal computation → behavior**, completing the mechanistic analysis.
-
----
 
 
 
