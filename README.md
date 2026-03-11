@@ -204,19 +204,19 @@ This strongly supports the claim that **risk commitment is an internal decision 
 
 Putting everything together:
 
-1. The DRQN forms an **internal intention to commit or not commit to risk**
-2. This intention:
-   - appears very early in the episode
-   - is stored in the recurrent hidden state
-   - persists across time
-3. Downstream actions follow this internal variable
-4. A simple linear probe can reliably read it out
 
-In short:
+> **The agent computes the optimal route immediately from the starting state and stores this commitment in the recurrent hidden state**
 
-> **The agent plans risk internally before acting on it.**
+In particular its doing
 
-This shifts the interpretation of the policy from reactive behavior to **latent-variable–driven planning**.
+``
+if start_row >= 3:
+    route = risky
+else:
+    route = safe
+``
+
+
 
 > **Taking Risk is deterministic with respect to starting position**
 
