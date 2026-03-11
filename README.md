@@ -218,6 +218,9 @@ In short:
 
 This shifts the interpretation of the policy from reactive behavior to **latent-variable–driven planning**.
 
+> **Taking Risk is deterministic with respect to starting position**
+
+![Deterministic route w.r.t starting pos.](plots/deterministic_route.png)
 ---
 
 ## 10. Next Step: Mechanistic Localization and Causal Tests
